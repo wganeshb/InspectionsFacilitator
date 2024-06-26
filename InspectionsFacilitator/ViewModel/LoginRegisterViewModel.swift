@@ -12,7 +12,7 @@ class LoginRegisterViewModel: ObservableObject {
     @Published var status: Bool = false
     
     func login(email: String, password: String) async {
-        try? await Task.sleep(nanoseconds: 5_000_000_000)
+        try? await Task.sleep(nanoseconds: 1_000_000_000)
         do {
             let loginStatus = try await WebService().login(email: email, password: password)
             await MainActor.run {
