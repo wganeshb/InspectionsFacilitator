@@ -21,5 +21,5 @@ Notes -
 
 Recording of the simulator - 
 
-Uploading Simulator Screen Recording - iPhone 15 Pro - 2024-07-08 at 03.30.05.mp4…
+https://github.com/wganeshb/InspectionsFacilitator/assets/3005149/620ed121-19b8-4e7c-acb9-0401f5d97cf5
 
