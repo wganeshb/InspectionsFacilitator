@@ -1,12 +1,12 @@
 # InspectionsFacilitator
 
-Following funcitons are working
+Following features are working -
 1. Registration (Only once)
 2. Login
 3. Fetch ispections on selecting start
 4. Submit is returning the Success response.
 
-Following things are in Newly added - 
+Following things are in updated in new commit -
 1. The Unresponsive UI issue on inspection screen is resolved
 2. Added test case for webService and ViewModels.
 3. Provided the alerts wherever required.
