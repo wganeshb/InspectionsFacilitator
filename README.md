@@ -18,3 +18,8 @@ Notes -
    So the checks are added.
 2. Fetch API works independenly without login. Need fix from the backend.
 
+
+Recording of the simulator - 
+
+Uploading Simulator Screen Recording - iPhone 15 Pro - 2024-07-08 at 03.30.05.mp4…
+
