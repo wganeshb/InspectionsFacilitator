@@ -9,7 +9,6 @@ import Foundation
 
 final class InspectionsResponseViewModel: ObservableObject {
     
-    // @Published var inspectionModel: InspectionsModel?
     @Published var questions: [QuestionModel]? = []
     @Published var categories: [CategoryModel]? = []
     @Published var inspectionType: String? = ""
@@ -34,33 +33,24 @@ final class InspectionsResponseViewModel: ObservableObject {
                 }
             }
             
-            print("inspections ** : \(inspectionsResponseModel)")
-            print("\n------------------------------------------------------------------------")
-            print("question model array : \(String(describing: self.questions))")
-            
         } catch (let error) {
-            print(error.localizedDescription)
+            
         }
     }
     
     func canSubmitInspection(questionList: [QuestionModel]?) -> Bool {
         
-        print("questionList count : \(questionList?.count ?? 0)")
         for question in questionList ?? [] {
-            print("Question : \(question.name), answer selected : \(question.selectedAnswerChoiceId ?? 0)")
+            print("question.selectedAnswerChoiceId : \(question.selectedAnswerChoiceId)")
             if question.selectedAnswerChoiceId != nil {
                 canSubmit = true
             }
             else {
                 canSubmit = false
+                return canSubmit
             }
         }
         return canSubmit
     }
     
-    func printData() {
-        Utility().printDivider()
-        print("Questions : \(String(describing: self.questions?.count))")
-        Utility().printDivider()
-    }
 }

@@ -29,6 +29,12 @@ struct OperationsView: View {
             }
             
         }.task {
+            
+            inspectionsResponseViewModel.questions = []
+            inspectionsResponseViewModel.categories = []
+            inspectionsResponseViewModel.inspectionType = ""
+            inspectionsResponseViewModel.inspectionModelResponse = nil
+            
             if inspectionsResponseViewModel.questions?.count == 0 {
                 await inspectionsResponseViewModel.getInspection()
                 inspectionsResponseViewModel.questions = inspectionsResponseViewModel.questions?.unique{$0.id}

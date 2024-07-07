@@ -10,6 +10,7 @@ import Foundation
 class LoginRegisterViewModel: ObservableObject {
     
     @Published var status: Bool = false
+    @Published var error: ErrorCases?
     
     func login(email: String, password: String) async {
         try? await Task.sleep(nanoseconds: 1_000_000_000)
@@ -18,10 +19,11 @@ class LoginRegisterViewModel: ObservableObject {
             await MainActor.run {
                 self.status = loginStatus
             }
-            Utility().printDivider()
-            print("Login status : ", self.status)
         } catch (let error) {
-            print(error.localizedDescription)
+            await MainActor.run {
+                self.status = false
+                self.error = error as? ErrorCases
+            }
         }
     }
     
@@ -31,10 +33,11 @@ class LoginRegisterViewModel: ObservableObject {
             await MainActor.run {
                 self.status = registerStatus
             }
-            Utility().printDivider()
-            print("Register status : ", self.status)
         } catch (let error) {
-            print(error.localizedDescription)
+            await MainActor.run {
+                self.status = false
+                self.error = error as? ErrorCases
+            }
         }
     }
     

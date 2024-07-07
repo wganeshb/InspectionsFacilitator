@@ -11,7 +11,6 @@ import SwiftUI
 struct InspectionsFacilitatorApp: App {
     var body: some Scene {
         WindowGroup {
-            //InspectionTestView()
             LoginRegisterView()
         }
     }

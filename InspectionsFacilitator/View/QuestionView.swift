@@ -9,7 +9,9 @@ import SwiftUI
 
 struct QuestionView: View {
     
+    typealias TapAction = (QuestionModel) -> Void
     @State var question: QuestionModel
+    var tapAction: TapAction?
     
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
@@ -20,6 +22,11 @@ struct QuestionView: View {
                 HStack {
                     Button(action: {
                         question.updateAnswerChoice(answerChoice: answerChoice.id)
+                        
+                        if let tapAction = tapAction {
+                            tapAction(question)
+                        }
+                        
                     }, label: {
                         if question.selectedAnswerChoiceId == answerChoice.id {
                             Circle()
@@ -36,9 +43,6 @@ struct QuestionView: View {
                     })
                     .buttonStyle(.bordered)
                     Text(answerChoice.name)
-                }
-                .onTapGesture {
-                    
                 }
             }
             .padding(.bottom, 10)

@@ -9,18 +9,18 @@ import Foundation
 
 class InspectionSubmissionViewModel: ObservableObject {
     @Published var status: Bool = false
+    @Published var inspectionSubmissionError: ErrorCases?
     
     func submit(inspectionModelObject: InspectionsModelResponse) async {
         try? await Task.sleep(nanoseconds: 1_000_000_000)
         do {
-            let loginStatus = try await WebService().submit(inspectionModelObject: inspectionModelObject)
+            let submitStatus = try await WebService().submit(inspectionModelObject: inspectionModelObject)
             await MainActor.run {
-                self.status = loginStatus
+                self.status = submitStatus
             }
-            Utility().printDivider()
-            print("Submit status : ", self.status)
         } catch (let error) {
-            print(error.localizedDescription)
+            self.status = false
+            self.inspectionSubmissionError = error as? ErrorCases
         }
     }
 }

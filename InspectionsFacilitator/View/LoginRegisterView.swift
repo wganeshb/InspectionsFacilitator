@@ -18,8 +18,10 @@ struct LoginRegisterView: View {
     @StateObject var appState: AppState = AppState()
     @State private var username: String = ""
     @State private var password: String = ""
-    @State private var loginStatus: Bool = false
     @State private var incorrectCredentials = 0
+    
+    @State var showActivity = true
+    @State var showAlertOnRegisterFail = false
     
     @ObservedObject var loginRegisterViewModel = LoginRegisterViewModel()
     
@@ -27,7 +29,13 @@ struct LoginRegisterView: View {
         NavigationStack {
             VStack(alignment: .center) {
                 
-                Text("Login status : \( (appState.loggedInStatus) ? "Logged in" : "Not logged in")")
+	                HStack {
+                    Text("\((appState.registeredStatus) ? "Login" : "Register")")
+                        .font(.largeTitle)
+                        .padding()
+                    LoaderView(tintColor: .blue, scaleSize: 1.0).hidden(showActivity)
+                }
+                
                 TextField("Username", text: $username)
                     .padding()
                     .frame(width:300.0 ,height: 50.0)
@@ -43,29 +51,48 @@ struct LoginRegisterView: View {
                 
                 Button {
                     Task {
+                        
+                        self.showActivity = !self.showActivity
+                        
                         if appState.registeredStatus {
                             
-                            print("Calling the login API with \(username) \(password)")
-                            Utility().printDivider()
+                            try? await Task.sleep(nanoseconds: 3_000_000_000)
                             
                             await loginRegisterViewModel.login(email: username, password: password)
-                            //await loginRegisterViewModel.login(email: "Ganesh@mail.com", password: "1234")
                             appState.loggedInStatus = loginRegisterViewModel.status
+                            self.showActivity = loginRegisterViewModel.status
+                            
+                            if !appState.loggedInStatus {
+                                self.showAlertOnRegisterFail = true
+                                self.showActivity = true
+                                password = ""
+                            }
                         }
                         else {
-                            print("Calling registation API with \(username) \(password)")
-                            Utility().printDivider()
+                            
+                            try? await Task.sleep(nanoseconds: 3_000_000_000)
                             
                             await loginRegisterViewModel.register(email: username, password: password)
                             appState.registeredStatus = loginRegisterViewModel.status
+                            self.showActivity = !self.showActivity
+                            
                             if appState.registeredStatus {
                                 UserDefaults.standard.setValue(true, forKey: "isRegistered")
+                                password = ""
+                            }
+                            else {
+                                self.showAlertOnRegisterFail = true
                             }
                         }
                     }
                 } label: {
                     Text("\( (appState.registeredStatus) ? "Login" : "Register")")
                 }
+                .alert(isPresented: $showAlertOnRegisterFail, content: {
+                    Alert(title: Text("Alert"),
+                          message: Text("\((loginRegisterViewModel.error != nil) ? loginRegisterViewModel.error!.localizedDescription : "Invalid response")"),//Text("Invalid response. Please check the credentials"),
+                          dismissButton: .default(Text("Close")))
+                })
                 .padding()
                 .foregroundColor(.white)
                 .background(.blue.opacity(0.5))
