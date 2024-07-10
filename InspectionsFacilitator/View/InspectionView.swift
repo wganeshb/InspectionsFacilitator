@@ -44,7 +44,9 @@ struct InspectionView: View {
                             }
                         }
                     }
+                    .listRowSeparator(.hidden)
                 }
+                .listStyle(.plain)
                 
                 HStack {
                     

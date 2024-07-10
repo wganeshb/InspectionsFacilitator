@@ -45,10 +45,11 @@ struct QuestionView: View {
                     Text(answerChoice.name)
                 }
             }
-            .padding(.bottom, 10)
         }
         .padding(.horizontal, 20)
-        .frame(width: 340, height: 550, alignment: .leading)
+        .padding(.top, 20)
+        .padding(.bottom, 20)
+        .frame(width: 360, alignment: .leading)
         .background(Color(uiColor: .systemGray6))
         .cornerRadius(10.0)
         .shadow(color: Color(uiColor: .label).opacity(0.2), radius: 10)
