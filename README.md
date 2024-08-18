@@ -21,5 +21,3 @@ Notes -
 
 Recording of the simulator - 
 
-https://github.com/wganeshb/InspectionsFacilitator/assets/3005149/620ed121-19b8-4e7c-acb9-0401f5d97cf5
-
